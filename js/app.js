@@ -99,3 +99,4 @@ let omar  =new Employee("Omar Zaid","Development","Senior","./Photos/6.jpg");
 let rana  =new Employee("Rana Saleh","Development","Junior","./Photos/5.jpg");
 let hadi  =new Employee("Hadi Ahmad","Finance","Mid-Senior","./Photos/6.jpg");
 
+console.log(allEmployee);
