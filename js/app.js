@@ -5,7 +5,7 @@ let departmentForm;
 let levelForm;
 let imageURLForm;
 let form = document.getElementById("form");
-let formID=document.getElementById("showEmployee");
+let divID=document.getElementById("showEmployee");
 let btn = document.getElementById("submit");
 function Employee (fullName,department,level,imageURL) {
    // this.employeeID=employeeID;
@@ -17,7 +17,6 @@ function Employee (fullName,department,level,imageURL) {
     allEmployee.push(this);
     this.calculateRandomSalary();
     this.calculateNetSalary();
-    this.showData();
 }
 Employee.prototype.calculateRandomSalary = function(){
     switch (this.level) {
@@ -37,9 +36,6 @@ Employee.prototype.calculateRandomSalary = function(){
 }
 Employee.prototype.calculateNetSalary =function(){
 this.netSalary=this.salary- (this.salary * (7.5 / 100));
-}
-Employee.prototype.render=function () {
-    document.write(`<h1>Employee ID : ${this.employeeID} || Employee name : ${this.fullName}  || Employee salary : ${this.salary}</h1><br>`);
 }
 Employee.prototype.generateUniqueID=function(){
 if (Array.isArray(allEmployee) && allEmployee.length==0) {
@@ -70,14 +66,12 @@ let title = document.createElement("h3");
  let title3=document.createElement("h3");
  title3.textContent="level :"+this.level;
  divToShow.appendChild(title3);
- 
- 
- formID.appendChild(divToShow);
+ divID.appendChild(divToShow);
+
 
 }
 form.addEventListener("submit", handelSubmit);
 function handelSubmit(event){
-   // event.stopImmediatePropagation();
     event.preventDefault();
     fullNameForm = event.target.name.value;
     imageURLForm = event.target.image.value;
@@ -85,18 +79,44 @@ function handelSubmit(event){
     levelForm=event.target.level.value;
     imageURLForm=event.target.image.value;
     let newEmployee=new Employee(fullNameForm,departmentForm,levelForm,imageURLForm);
-    //departmentForm = event.target.department.selected;
+    divID.innerHTML="";
+    saveEmployee();
     form.reset();
 }
 //Remember that Department and Level must be the same as in the following two arrays:
 // let department=["Administration","Marketing","Development","Finance"];
 // let level=["Junior","Mid-Senior","Senior"];
-let ghazi  =new Employee("Ghazi Samer","Administration","Senior","./Photos/1.jpg");
-let lana  =new Employee("Lana Ali","Finance","Senior","./Photos/3.jpg");
-let tamara  =new Employee("Tamara Ayoub","Marketing","Senior","./Photos/5.jpg");
-let safi  =new Employee("Safi Walid","Administration","Mid-Senior","./Photos/4.jpg");
-let omar  =new Employee("Omar Zaid","Development","Senior","./Photos/6.jpg");
-let rana  =new Employee("Rana Saleh","Development","Junior","./Photos/5.jpg");
-let hadi  =new Employee("Hadi Ahmad","Finance","Mid-Senior","./Photos/6.jpg");
+if (localStorage.getItem("employee")==null) {
+    let ghazi  =new Employee("Ghazi Samer","Administration","Senior","./Photos/1.jpg");
+    let lana  =new Employee("Lana Ali","Finance","Senior","./Photos/3.jpg");
+    let tamara  =new Employee("Tamara Ayoub","Marketing","Senior","./Photos/5.jpg");
+    let safi  =new Employee("Safi Walid","Administration","Mid-Senior","./Photos/4.jpg");
+    let omar  =new Employee("Omar Zaid","Development","Senior","./Photos/6.jpg");
+    let rana  =new Employee("Rana Saleh","Development","Junior","./Photos/5.jpg");
+    let hadi  =new Employee("Hadi Ahmad","Finance","Mid-Senior","./Photos/6.jpg");
+    saveEmployee();
 
-console.log(allEmployee);
+}else{
+    
+    let employee = localStorage.getItem("employee");
+    let parseEmployee = JSON.parse(employee);
+    for (let i = 0; i < parseEmployee.length; i++) {
+        let newEmployee=new Employee(parseEmployee[i].fullName,parseEmployee[i].department,parseEmployee[i].level,parseEmployee[i].imageURL);
+
+    }
+    for (let i = 0; i < allEmployee.length; i++) {
+        allEmployee[i].showData();
+          
+    }
+
+}
+
+function saveEmployee(){
+    let formatedData = JSON.stringify(allEmployee);
+    localStorage.setItem("employee", formatedData);
+    for (let i = 0; i < allEmployee.length; i++) {
+        allEmployee[i].showData();
+          
+    }
+}
+
