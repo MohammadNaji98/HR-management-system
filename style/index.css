@@ -50,27 +50,28 @@ main fieldset{
 #showEmployee{
     display: flex;
     text-align: center;
-    gap: 30px ;
-    justify-content: space-around;
+    gap: 10px ;
+    justify-content:center;
+    flex-wrap: wrap;
 }
 #Show  {
     background-color:#357C3C;
     color: black;
     align-items: center;
     text-align: center;
-    width:28% ;
+    width:25% ;
     height:fit-content;
     margin: auto;
     display: block;
     align-items: center;
-    border-radius: 20%;
+    border-radius: 10%;
     font-size: small;
-    margin-top: 8%;
-    margin-bottom: 8%;
+    margin-top: 1%;
+    margin-bottom: 1%;
   }
   #Show img {
     width: 50%;
-    border-radius: 15%;
+    border-radius: 40%;
 
 }
 footer{
